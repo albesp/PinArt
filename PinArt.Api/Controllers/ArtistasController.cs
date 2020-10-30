@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using PinArt.Core.Entities;
 using PinArt.Core.Exceptions;
+using System.Linq;
 
 namespace PinArt.Api.Controllers
 {
@@ -62,6 +63,15 @@ namespace PinArt.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertArtista([FromBody] SaveArtistaDto saveArtistaDto)
         {
+            if (!ModelState.IsValid)
+            {
+                var message = string.Join(" | ", ModelState.Values
+                                    .SelectMany(v => v.Errors)
+                                    .Select(e => e.ErrorMessage));
+                throw new ModelStateException( "The Model Is Not Valid: " + message);
+            }
+                
+
             var artista = _mapper.Map<Artista>(saveArtistaDto);
 
             await _ArtistasService.InsertArtista(artista);
