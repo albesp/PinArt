@@ -35,6 +35,8 @@ namespace PinArt.Api
                 options.SuppressModelStateInvalidFilter = true;
             }); ;
 
+            services.ConfigureCors();
+
             //.AddNewtonsoftJson(options =>
             //{
             //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -54,6 +56,8 @@ namespace PinArt.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

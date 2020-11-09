@@ -32,5 +32,29 @@ namespace PinArt.Api.Extensions
 
             return services;
         }
+
+        public static IServiceCollection ConfigureCors(this IServiceCollection services)
+        {
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(
+            //        builder => builder.AllowAnyOrigin()
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader());
+            //});
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod(); ;
+                    });
+            });
+
+            return services;
+        }
     }
 }
