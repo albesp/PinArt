@@ -27,7 +27,8 @@ namespace PinArt.Api.Extensions
         public static IServiceCollection ConfigureDIServices(this IServiceCollection services)
         {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IArtistaService, ArtistaService>();         
+            services.AddTransient<IArtistaService, ArtistaService>();
+            services.AddTransient<IPaisService, PaisService>();
 
 
             return services;

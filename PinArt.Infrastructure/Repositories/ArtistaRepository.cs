@@ -1,11 +1,9 @@
-﻿using PinArt.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PinArt.Core.Entities;
 using PinArt.Core.Interfaces;
 using PinArt.Infrastructure.Data;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace PinArt.Infrastructure.Repositories
 {

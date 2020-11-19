@@ -8,6 +8,7 @@ namespace PinArt.Core.Interfaces
     public interface IUnitOfWork
     {
         IArtistaRepository Artistas { get; }
+        IPaisRepository Paises { get; }
         Task CompleteAsync();
     }
 }

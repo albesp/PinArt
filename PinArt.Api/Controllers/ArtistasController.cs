@@ -27,8 +27,8 @@ namespace PinArt.Api.Controllers
         /// <summary>
         /// Retrieve all posts
         /// </summary>
-        // GET: /movies
-
+        
+        // GET: /artistas
         [HttpGet]
         public async Task<IActionResult> GetAllArtistas()
         {  
