@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using PinArt.Api.Extensions;
 using PinArt.Infrastructure.Filters;
 using System;
+using Vidly.Api.Extensions;
 
 namespace PinArt.Api
 {
@@ -40,6 +41,7 @@ namespace PinArt.Api
             }); ;
 
             services.ConfigureCors();
+            services.ConfigureAuthentication(Configuration);
 
             //.AddNewtonsoftJson(options =>
             //{
@@ -63,7 +65,9 @@ namespace PinArt.Api
 
             app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

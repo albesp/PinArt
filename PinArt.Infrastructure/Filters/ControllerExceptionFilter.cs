@@ -64,7 +64,7 @@ namespace PinArt.Infrastructure.Filters
             }
 
 
-            //Not Found
+            // Not Found
             if (context.Exception.GetType() == typeof(NotFoundException))
             {
                 var exception = (NotFoundException)context.Exception;
@@ -81,7 +81,24 @@ namespace PinArt.Infrastructure.Filters
                 context.ExceptionHandled = true;
             }
 
-            
+            // Unauthorized
+            if (context.Exception.GetType() == typeof(UnauthorizedException))
+            {
+                var exception = (UnauthorizedException)context.Exception;
+
+                var errorDetail = new ErrorDetail()
+                {
+                    Status = 401,
+                    Title = "Unauthorized",
+                    Message = exception.Message
+                };
+
+                context.Result = new UnauthorizedObjectResult(errorDetail);
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                context.ExceptionHandled = true;
+            }
+
+
         }
     }
 }
