@@ -29,7 +29,7 @@ namespace PinArt.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers(options =>
             {
-                options.Filters.Add<ControllerExceptionFilter>();
+                options.Filters.Add<ValidateModelFilter>();
             })
             .ConfigureApiBehaviorOptions(options =>
             {
@@ -41,12 +41,7 @@ namespace PinArt.Api
             }); ;
 
             services.ConfigureCors();
-            services.ConfigureAuthentication(Configuration);
-
-            //.AddNewtonsoftJson(options =>
-            //{
-            //    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            //});            
+            services.ConfigureAuthentication(Configuration);                
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,8 +51,13 @@ namespace PinArt.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                //app.ConfigureExceptionHandler(logger); 
+            }
 
-            app.ConfigureExceptionHandler();
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
+            app.UseExceptionHandler("/error");
 
             app.UseHttpsRedirection();
 

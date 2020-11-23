@@ -62,8 +62,7 @@ namespace PinArt.Api.Controllers
             return Ok(response);
         }
 
-        //POST: movies
-        [ValidateModelFilter]
+        //POST: movies       
         [HttpPost]
         public async Task<IActionResult> InsertArtista([FromBody] SaveArtistaDto saveArtistaDto)
         {
