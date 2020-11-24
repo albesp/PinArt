@@ -32,6 +32,11 @@ namespace PinArt.Api.Controllers
                     title = "Bad Request";
                     break;
 
+                case "UnauthorizedException":
+                    status = (int)HttpStatusCode.Unauthorized;
+                    title = "Unauthorized";
+                    break;
+
                 default:
                     status = (int)HttpStatusCode.InternalServerError;
                     title = "Internal Server Error";
@@ -49,8 +54,6 @@ namespace PinArt.Api.Controllers
             Response.ContentType = "application/json";
             Response.WriteAsync(error);
         }
-
-
 
         [Route("error/{code:int}")]
 

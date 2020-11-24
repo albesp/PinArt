@@ -20,14 +20,14 @@ namespace Vidly.Api.Extensions
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = configuration["Authentication:Issuer"],
                     ValidAudience = configuration["Authentication:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Authentication:SecretKey"])),
-                    ClockSkew = TimeSpan.Zero
+                    //ClockSkew = TimeSpan.Zero
                 };
 
             });

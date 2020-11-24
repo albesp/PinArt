@@ -1,19 +1,18 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PinArt.Api.Responses;
 using PinArt.Core.DTOs.Artista;
+using PinArt.Core.Entities;
+using PinArt.Core.Exceptions;
 using PinArt.Core.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PinArt.Core.Entities;
-using PinArt.Core.Exceptions;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
-using PinArt.Infrastructure.Filters;
+
 
 namespace PinArt.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ArtistasController : ControllerBase
@@ -65,16 +64,7 @@ namespace PinArt.Api.Controllers
         //POST: movies       
         [HttpPost]
         public async Task<IActionResult> InsertArtista([FromBody] SaveArtistaDto saveArtistaDto)
-        {
-            //if (!ModelState.IsValid)
-            //{
-            //    var message = string.Join(" | ", ModelState.Values
-            //                        .SelectMany(v => v.Errors)
-            //                        .Select(e => e.ErrorMessage));
-            //    throw new ModelStateException( "The Model Is Not Valid: " + message);
-            //}
-                
-
+        {            
             var artista = _mapper.Map<Artista>(saveArtistaDto);
 
             await _ArtistasService.InsertArtista(artista);
