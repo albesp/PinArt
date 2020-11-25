@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Vidly.Core.Services;
 
 namespace PinArt.Api.Extensions
 {
@@ -29,7 +30,7 @@ namespace PinArt.Api.Extensions
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IArtistaService, ArtistaService>();
             services.AddTransient<IPaisService, PaisService>();
-
+            services.AddTransient<ISecurityService, SecurityService>();
 
             return services;
         }

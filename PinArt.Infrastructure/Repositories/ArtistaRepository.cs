@@ -22,7 +22,7 @@ namespace PinArt.Infrastructure.Repositories
                                             .Include(a => a.Pais)
                                             .Include(a => a.Obras)
                                             .ThenInclude(o => o.Tecnica)
-                                            .Include(a => a.ArtistaEstilos)
+                                            .Include(a => a.ArtistasEstilos)
                                             .ThenInclude(ae => ae.Estilo);
 
             return await artistas.ToListAsync();
@@ -32,7 +32,7 @@ namespace PinArt.Infrastructure.Repositories
             return await _context.Artistas.Include(a => a.Pais)
                                           .Include(a => a.Obras)
                                           .ThenInclude(o => o.Tecnica)
-                                          .Include(a => a.ArtistaEstilos)
+                                          .Include(a => a.ArtistasEstilos)
                                           .ThenInclude(ae => ae.Estilo)
                                           .SingleOrDefaultAsync(v => v.Id == id);
         }

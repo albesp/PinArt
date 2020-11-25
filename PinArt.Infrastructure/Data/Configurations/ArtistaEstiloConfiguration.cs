@@ -11,7 +11,7 @@ namespace PinArt.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<ArtistaEstilo> builder)
         {
-            builder.ToTable("ArtistaEstilos");
+            builder.ToTable("ArtistasEstilos");
 
             // LLAVE PRIMARIA
             builder.HasKey(ae => new { ae.ArtistaId, ae.EstiloId });
@@ -27,12 +27,12 @@ namespace PinArt.Infrastructure.Data.Configurations
             // RELACIONES
 
             builder.HasOne(ae => ae.Artista)
-                .WithMany(a => a.ArtistaEstilos)
+                .WithMany(a => a.ArtistasEstilos)
                 .HasForeignKey(ae => ae.ArtistaId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.HasOne(ae => ae.Estilo)
-                .WithMany(ae => ae.ArtistaEstilos)
+                .WithMany(ae => ae.ArtistasEstilos)
                 .HasForeignKey(ae => ae.EstiloId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         }

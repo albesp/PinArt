@@ -1,51 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using PinArt.Core.Entities;
-using PinArt.Core.Exceptions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using System.Security.Claims;
+using PinArt.Core.Interfaces;
+using System.Threading.Tasks;
 
-namespace PinArt.Api.Controllers
+namespace Pinart.Api.Controllers
 {
-    [Route("api/token")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TokenController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
+        private readonly ISecurityService _securityService;
 
-       
-        [HttpPost]
-        public IActionResult Login([FromBody] UserLogin user)
+        public TokenController(IConfiguration configuration, ISecurityService securityService)
         {
-            if (user == null)
+            _configuration = configuration;
+            _securityService = securityService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Authentication(UserLogin login)
+        {
+            var validation = await IsValidUser(login);
+            if (validation.Item1)
             {
-                throw new NotFoundException("El usuario no es valido");
+                var token = GenerateToken(validation.Item2);
+                return Ok(new { token });
             }
-            if (user.UserName == "johndoe" && user.Password == "def@123")
-            {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-                var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:5001",
-                    audience: "http://localhost:5001",
-                    claims: new List<Claim>(),
-                    expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials
-                );
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
-            }
-            else
-            {
-                
-                throw new NotFoundException("El Usuario o Password no son Validos");
-            }
+
+            return NotFound();
+        }
+
+        private async Task<(bool, Security)> IsValidUser(UserLogin login)
+        {
+            var user = await _securityService.GetLoginByCredentials(login);
+            return (user != null, user);
+        }
+
+        private string GenerateToken(Security user)
+        {
+            //Header
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authentication:SecretKey"]));
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+            var header = new JwtHeader(signingCredentials);
+
+            //Claims
+            var claims = new[]
+             {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim("User", user.User),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
+            };
+
+            //Payload            
+            var payload = new JwtPayload
+            (
+                _configuration["Authentication:Issuer"],
+                _configuration["Authentication:Audience"],
+                claims,
+                DateTime.Now,
+                DateTime.UtcNow.AddMinutes(10)
+            );
+
+            var token = new JwtSecurityToken(header, payload);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
-

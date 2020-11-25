@@ -17,10 +17,11 @@ namespace PinArt.Infrastructure.Data
         public DbSet<Artista> Artistas { get; set; }
         public DbSet<Obra> Obras { get; set; }
         public DbSet<Estilo> Estilos { get; set; }
-        public DbSet<ArtistaEstilo> ArtistaEstilos { get; set; }
+        public DbSet<ArtistaEstilo> ArtistasEstilos { get; set; }
         public DbSet<Tecnica> Tecnicas { get; set; }
         public DbSet<Pais> Paises { get; set; }
-        
+        public DbSet<Security> Security { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

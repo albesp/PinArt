@@ -10,8 +10,8 @@ using PinArt.Infrastructure.Data;
 namespace PinArt.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(PinArtDbContext))]
-    [Migration("20201014132229_addManyToManyRelationShips")]
-    partial class addManyToManyRelationShips
+    [Migration("20201125175256_SecurityTable")]
+    partial class SecurityTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,8 +38,8 @@ namespace PinArt.Infrastructure.Data.Migrations
                         .HasMaxLength(25);
 
                     b.Property<string>("Biografia")
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -137,6 +137,41 @@ namespace PinArt.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Paises");
+                });
+
+            modelBuilder.Entity("PinArt.Core.Entities.Security", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<string>("User")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50)
+                        .IsUnicode(false);
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Security");
                 });
 
             modelBuilder.Entity("PinArt.Core.Entities.Tecnica", b =>

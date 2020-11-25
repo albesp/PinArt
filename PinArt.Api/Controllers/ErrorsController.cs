@@ -81,6 +81,12 @@ namespace PinArt.Api.Controllers
                     message = "No tiene acceso al recurso: " + origen;
                     break;
 
+                case 403:
+                    status = code;
+                    title = "Forbidden";
+                    message = "El Usuario No tiene permisos para el recurso: " + origen;
+                    break;
+
                 default:
                     status = (int)HttpStatusCode.InternalServerError;
                     title = "Internal Server Error";

@@ -9,6 +9,7 @@ namespace PinArt.Core.Interfaces
     {
         IArtistaRepository Artistas { get; }
         IPaisRepository Paises { get; }
+        ISecurityRepository Security { get; }
         Task CompleteAsync();
     }
 }

@@ -10,6 +10,6 @@ namespace PinArt.Core.Entities
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
 
-        public ICollection<ArtistaEstilo> ArtistaEstilos { get; set; }
+        public ICollection<ArtistaEstilo> ArtistasEstilos { get; set; }
     }
 }

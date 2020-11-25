@@ -3,6 +3,7 @@ using PinArt.Core.DTOs.Artista;
 using PinArt.Core.DTOs.Estilo;
 using PinArt.Core.DTOs.Obra;
 using PinArt.Core.DTOs.Pais;
+using PinArt.Core.DTOs.Security;
 using PinArt.Core.DTOs.Tecnica;
 using PinArt.Core.Entities;
 using System.Linq;
@@ -15,15 +16,16 @@ namespace PinArt.Infrastructure.Mapping
         {
             // Entities To DTOs 
 
-            //Mapear los artistas y obterner los estilos de cada artista en una relación de muchos a muchos
+            //Mapear los artistas y obtener los estilos de cada artista en una relación de muchos a muchos
             CreateMap<Artista, GetArtistaDto>()            
             .ForMember(artistadto => artistadto.Estilos, e => e
-            .MapFrom(ar => ar.ArtistaEstilos.Select(ae => ae.Estilo)));            
+            .MapFrom(ar => ar.ArtistasEstilos.Select(ae => ae.Estilo)));            
 
             CreateMap<Obra, GetObraDto>();
             CreateMap<Pais, GetPaisDto>();
             CreateMap<Tecnica, GetTecnicaDto>();
             CreateMap<Estilo, GetEstiloDto>();
+            CreateMap<Security, SaveSecurityDto>().ReverseMap();
 
             // DTOs To Entities   
             CreateMap<SaveArtistaDto, Artista>().ReverseMap();

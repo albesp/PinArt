@@ -23,6 +23,6 @@ namespace PinArt.Core.Entities
             Obras = new Collection<Obra>();
         }
 
-        public ICollection<ArtistaEstilo> ArtistaEstilos { get; set; }
+        public ICollection<ArtistaEstilo> ArtistasEstilos { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PinArt.Api.Responses;
 using PinArt.Core.DTOs.Artista;
 using PinArt.Core.Entities;
+using PinArt.Core.Enumerations;
 using PinArt.Core.Exceptions;
 using PinArt.Core.Interfaces;
 using System.Collections.Generic;
@@ -29,8 +30,9 @@ namespace PinArt.Api.Controllers
         /// <summary>
         /// Retrieve all posts
         /// </summary>
-        
+
         // GET: /artistas
+        [Authorize(Roles = nameof(RoleType.Admin))]
         [HttpGet]
         public async Task<IActionResult> GetAllArtistas()
         {  

@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20201125172703_SecurityTable.cs" />
+    <Compile Remove="Data\Migrations\20201125172703_SecurityTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201125173740_SecurityTable.cs" />
+    <Compile Remove="Data\Migrations\20201125173740_SecurityTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201125174016_SecurityTable.cs" />
+    <Compile Remove="Data\Migrations\20201125174016_SecurityTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />

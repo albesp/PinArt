@@ -12,6 +12,7 @@ namespace PinArt.Infrastructure.Repositories
         private readonly PinArtDbContext _context;
         private readonly IArtistaRepository _artistaRepository;
         private readonly IPaisRepository _paisRepository;
+        private readonly ISecurityRepository _securityRepository;
 
 
         public UnitOfWork(PinArtDbContext context)
@@ -19,8 +20,9 @@ namespace PinArt.Infrastructure.Repositories
           this._context = context;
         }
 
-         public IArtistaRepository Artistas => _artistaRepository ?? new ArtistaRepository(_context);
-         public IPaisRepository Paises => _paisRepository ?? new PaisRepository(_context);
+        public IArtistaRepository Artistas => _artistaRepository ?? new ArtistaRepository(_context);
+        public IPaisRepository Paises => _paisRepository ?? new PaisRepository(_context);
+        public ISecurityRepository Security => _securityRepository ?? new SecurityRepository(_context);
 
         public async Task CompleteAsync()
          {

@@ -171,12 +171,12 @@ namespace PinArt.Infrastructure.Data.Migrations
             modelBuilder.Entity("PinArt.Core.Entities.ArtistaEstilo", b =>
                 {
                     b.HasOne("PinArt.Core.Entities.Artista", "Artista")
-                        .WithMany("ArtistaEstilos")
+                        .WithMany("ArtistasEstilos")
                         .HasForeignKey("ArtistaId")
                         .IsRequired();
 
                     b.HasOne("PinArt.Core.Entities.Estilo", "Estilo")
-                        .WithMany("ArtistaEstilos")
+                        .WithMany("ArtistasEstilos")
                         .HasForeignKey("EstiloId")
                         .IsRequired();
                 });
