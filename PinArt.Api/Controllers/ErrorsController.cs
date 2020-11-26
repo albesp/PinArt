@@ -32,6 +32,11 @@ namespace PinArt.Api.Controllers
                     title = "Bad Request";
                     break;
 
+                case "ModelStateException":
+                    status = (int)HttpStatusCode.BadRequest;
+                    title = "Bad Request - Model Not Valid";
+                    break;
+
                 case "UnauthorizedException":
                     status = (int)HttpStatusCode.Unauthorized;
                     title = "Unauthorized";

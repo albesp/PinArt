@@ -1,14 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PinArt.Core.Interfaces;
 using PinArt.Core.Services;
 using PinArt.Infrastructure.Data;
+using PinArt.Infrastructure.Filters;
 using PinArt.Infrastructure.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Vidly.Core.Services;
 
 namespace PinArt.Api.Extensions
@@ -31,6 +30,27 @@ namespace PinArt.Api.Extensions
             services.AddTransient<IArtistaService, ArtistaService>();
             services.AddTransient<IPaisService, PaisService>();
             services.AddTransient<ISecurityService, SecurityService>();
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureAddControllers(this IServiceCollection services)
+        {
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<ValidateModelFilter>();
+            })
+             .ConfigureApiBehaviorOptions(options =>
+             {
+                 options.SuppressModelStateInvalidFilter = true;
+             })
+             .AddNewtonsoftJson(options =>
+             {
+                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                 options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+             })
+             .AddFluentValidation(options =>
+              options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
             return services;
         }

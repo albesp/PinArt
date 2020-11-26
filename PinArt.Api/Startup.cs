@@ -1,12 +1,10 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PinArt.Api.Extensions;
-using PinArt.Infrastructure.Filters;
 using System;
 using Vidly.Api.Extensions;
 
@@ -27,19 +25,7 @@ namespace PinArt.Api
             services.ConfigureDbContext(Configuration);
             services.ConfigureDIServices();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddControllers(options =>
-            {
-                options.Filters.Add<ValidateModelFilter>();
-            })
-            .ConfigureApiBehaviorOptions(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            }).AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            }); ;
-
+            services.ConfigureAddControllers();
             services.ConfigureCors();
             services.ConfigureAuthentication(Configuration);                
         }
